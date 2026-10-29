@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#101411">
-    <title>AI Ticket CLI — Support Workspace</title>
+    <meta name="theme-color" content="#100c1c">
+    <title>AI Ticket CLI — Terminal</title>
 
     <style>
         :root {
-            --bg: #101411;
-            --panel: #171d19;
-            --panel-raised: #1c241f;
-            --input: #101612;
-            --border: #303b33;
-            --text: #e9f0e9;
-            --muted: #95a397;
-            --green: #a6f28d;
-            --green-dark: #1f3825;
-            --cyan: #91d9cb;
-            --red: #ffaaa5;
-            --yellow: #f1d58a;
-            --radius: 15px;
+            --bg: #100c1c;
+            --panel: #191328;
+            --panel-raised: #231a38;
+            --terminal: #110d1d;
+            --border: #3b2c55;
+            --text: #f0eafb;
+            --muted: #a99bbf;
+            --lavender: #c7a7ff;
+            --lavender-bright: #d9c5ff;
+            --lavender-dark: #35244e;
+            --success: #d4c0ff;
+            --red: #ffaaa9;
+            --radius: 16px;
         }
 
         * {
@@ -31,16 +31,15 @@
             margin: 0;
             min-height: 100vh;
             background:
-                radial-gradient(ellipse at 85% 0%, #243327 0%, transparent 35%),
+                radial-gradient(ellipse at 85% 0%, #302044 0%, transparent 42%),
                 var(--bg);
             color: var(--text);
-            font-family: Inter, ui-sans-serif, system-ui, -apple-system,
-                         BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-family: Inter, ui-sans-serif, system-ui, sans-serif;
             font-size: 14px;
             line-height: 1.6;
         }
 
-        button, input, textarea, select {
+        button, input {
             font: inherit;
         }
 
@@ -49,24 +48,22 @@
         }
 
         button:focus-visible,
-        input:focus-visible,
-        textarea:focus-visible,
-        select:focus-visible {
-            outline: 2px solid var(--green);
+        input:focus-visible {
+            outline: 2px solid var(--lavender);
             outline-offset: 3px;
         }
 
         .app {
-            width: min(1220px, 100%);
+            width: min(1050px, 100%);
             margin: 0 auto;
-            padding: 28px;
+            padding: 30px;
         }
 
         .topbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
+            gap: 16px;
             padding-bottom: 23px;
             border-bottom: 1px solid var(--border);
         }
@@ -81,20 +78,20 @@
         .brand-icon {
             display: grid;
             place-items: center;
-            width: 43px;
-            height: 43px;
+            width: 45px;
+            height: 45px;
             flex-shrink: 0;
-            border: 1px solid #52714e;
+            border: 1px solid #745a9b;
             border-radius: 13px;
-            background: var(--green-dark);
-            color: var(--green);
-            font-size: 23px;
+            background: var(--lavender-dark);
+            color: var(--lavender-bright);
+            font-size: 25px;
         }
 
         .brand h1 {
             margin: 0;
             font-size: 17px;
-            font-weight: 720;
+            font-weight: 750;
             letter-spacing: -0.5px;
         }
 
@@ -120,26 +117,26 @@
             width: 7px;
             height: 7px;
             border-radius: 50%;
-            background: var(--green);
-            box-shadow: 0 0 10px #a6f28855;
+            background: var(--lavender);
+            box-shadow: 0 0 10px #c7a7ff66;
         }
 
         .intro {
-            padding: 35px 0 28px;
+            padding: 38px 0 27px;
         }
 
         .eyebrow {
-            color: var(--green);
+            color: var(--lavender);
             font-size: 11px;
             font-weight: 750;
-            letter-spacing: 1.6px;
+            letter-spacing: 1.7px;
             text-transform: uppercase;
         }
 
         .intro h2 {
-            margin: 8px 0 9px;
-            font-size: clamp(28px, 4vw, 40px);
-            line-height: 1.15;
+            margin: 9px 0 10px;
+            font-size: clamp(30px, 5vw, 44px);
+            line-height: 1.12;
             letter-spacing: -1.5px;
         }
 
@@ -150,19 +147,12 @@
             font-size: 14px;
         }
 
-        .workspace {
-            display: grid;
-            grid-template-columns: minmax(0, 1.15fr) minmax(310px, 0.85fr);
-            gap: 20px;
-            align-items: start;
-        }
-
-        .panel {
-            min-width: 0;
+        .terminal-panel {
             overflow: hidden;
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            background: color-mix(in srgb, var(--panel) 94%, transparent);
+            background: var(--panel);
+            box-shadow: 0 18px 55px #00000020;
         }
 
         .panel-header {
@@ -170,14 +160,14 @@
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            padding: 18px 20px;
+            padding: 18px 21px;
             border-bottom: 1px solid var(--border);
         }
 
         .panel-title {
             margin: 0;
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 750;
         }
 
         .panel-subtitle {
@@ -188,223 +178,93 @@
 
         .tag {
             padding: 5px 9px;
-            border: 1px solid var(--border);
+            border: 1px solid #5c467d;
             border-radius: 7px;
-            color: var(--muted);
+            background: #281d3b;
+            color: var(--lavender);
             font-size: 10px;
             font-weight: 750;
             letter-spacing: 0.8px;
             text-transform: uppercase;
         }
 
-        .analysis-content {
-            padding: 20px;
-        }
-
-        .analysis-screen {
-            min-height: 290px;
-            max-height: 450px;
-            overflow: auto;
-            padding: 19px;
-            border: 1px solid #2a352d;
-            border-radius: 11px;
-            background: #0c100d;
-        }
-
-        .empty-state {
-            display: flex;
-            min-height: 245px;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .empty-icon {
-            display: grid;
-            place-items: center;
-            width: 49px;
-            height: 49px;
-            margin-bottom: 16px;
-            border: 1px solid #354b37;
-            border-radius: 15px;
-            background: #1b2b1e;
-            color: var(--green);
-            font-size: 24px;
-        }
-
-        .empty-state h3 {
-            margin: 0 0 7px;
-            font-size: 15px;
-        }
-
-        .empty-state p {
-            max-width: 290px;
-            margin: 0;
-            color: var(--muted);
-            font-size: 12px;
-        }
-
-        .analysis-text {
-            color: #d7e3d8;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-            font-size: 13px;
-            line-height: 1.85;
-            overflow-wrap: anywhere;
-            white-space: pre-wrap;
-        }
-
-        .analysis-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 15px;
-        }
-
-        .meta-pill {
-            padding: 6px 10px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--muted);
-            font-size: 11px;
-        }
-
-        .meta-pill strong {
-            color: var(--text);
-        }
-
-        .form-content {
-            display: grid;
-            gap: 19px;
-            padding: 20px;
-        }
-
-        .field {
-            display: grid;
-            gap: 8px;
-        }
-
-        .field label {
-            font-size: 12px;
-            font-weight: 650;
-        }
-
-        .field .hint {
-            margin-top: -4px;
-            color: var(--muted);
-            font-size: 11px;
-        }
-
-        input, textarea, select {
-            width: 100%;
-            min-width: 0;
-            padding: 12px 13px;
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            background: var(--input);
-            color: var(--text);
-            transition: border-color 150ms ease;
-        }
-
-        input:hover, textarea:hover, select:hover {
-            border-color: #536456;
-        }
-
-        textarea {
-            min-height: 130px;
-            resize: vertical;
-        }
-
-        input::placeholder, textarea::placeholder {
-            color: #647167;
-        }
-
-        .provider-note {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            background: var(--panel-raised);
-        }
-
-        .provider-note span {
-            color: var(--cyan);
-        }
-
-        .provider-note p {
-            margin: 0;
-            color: var(--muted);
-            font-size: 11px;
-        }
-
-        .provider-note strong {
-            color: var(--text);
-        }
-
-        .primary-button {
-            display: flex;
-            width: 100%;
-            min-height: 46px;
-            align-items: center;
-            justify-content: center;
-            gap: 9px;
-            padding: 12px 16px;
-            border: 1px solid var(--green);
-            border-radius: 9px;
-            background: var(--green);
-            color: #152116;
-            font-weight: 750;
-            transition: transform 120ms ease, background 120ms ease;
-        }
-
-        .primary-button:hover {
-            background: #bcffa7;
-        }
-
-        .primary-button:active {
-            transform: translateY(1px);
-        }
-
-        button:disabled {
-            cursor: wait;
-            opacity: 0.65;
-        }
-
-        .terminal-panel {
-            margin-top: 20px;
-        }
-
         .terminal-body {
-            padding: 18px 20px 20px;
-            background: #0c100d;
+            padding: 22px;
+            background: var(--terminal);
+        }
+
+        .terminal-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #2d2140;
+        }
+
+        .window-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #57416f;
+        }
+
+        .window-dot:first-child {
+            background: #d18cba;
+        }
+
+        .window-dot:nth-child(2) {
+            background: #c6a6f5;
+        }
+
+        .window-dot:nth-child(3) {
+            background: #9278c4;
+        }
+
+        .toolbar-label {
+            margin-left: auto;
+            color: #827393;
+            font-family: ui-monospace, monospace;
+            font-size: 11px;
         }
 
         .terminal-output {
             display: grid;
             gap: 13px;
-            max-height: 210px;
+            min-height: 320px;
+            max-height: 520px;
             overflow-y: auto;
-            margin-bottom: 15px;
+            padding: 22px 2px;
             font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-            font-size: 12px;
+            font-size: 13px;
+            line-height: 1.8;
         }
 
         .terminal-line {
             display: grid;
-            grid-template-columns: 18px minmax(0, 1fr);
-            gap: 8px;
+            grid-template-columns: 17px minmax(0, 1fr);
+            gap: 9px;
             overflow-wrap: anywhere;
             white-space: pre-wrap;
         }
 
-        .terminal-line .prefix {
-            color: var(--green);
+        .prefix {
+            color: var(--lavender);
         }
 
-        .terminal-line .line-text {
-            color: #bdc9bf;
+        .line-text {
+            color: #d0c5df;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .terminal-line.command .prefix,
+        .terminal-line.command .line-text {
+            color: var(--lavender-bright);
+        }
+
+        .terminal-line.success .prefix,
+        .terminal-line.success .line-text {
+            color: var(--success);
         }
 
         .terminal-line.error .prefix,
@@ -412,31 +272,41 @@
             color: var(--red);
         }
 
-        .terminal-line.success .prefix,
-        .terminal-line.success .line-text {
-            color: var(--green);
+        .terminal-line.muted .prefix,
+        .terminal-line.muted .line-text {
+            color: #87799a;
         }
 
         .terminal-input-row {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 5px 7px 5px 13px;
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            background: #101612;
+            gap: 11px;
+            padding: 7px 8px 7px 15px;
+            border: 1px solid #594174;
+            border-radius: 11px;
+            background: #191226;
+            transition: border-color 150ms ease;
+        }
+
+        .terminal-input-row:focus-within {
+            border-color: var(--lavender);
         }
 
         .terminal-prompt {
-            color: var(--green);
+            color: var(--lavender);
             font-family: ui-monospace, monospace;
+            font-size: 15px;
         }
 
         .terminal-input-row input {
             flex: 1;
+            width: 0;
+            min-width: 0;
             padding: 10px 0;
             border: 0;
+            outline: none;
             background: transparent;
+            color: var(--text);
             font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
         }
 
@@ -444,25 +314,71 @@
             outline: none;
         }
 
+        .terminal-input-row input::placeholder {
+            color: #78698b;
+        }
+
         .terminal-input-row button {
-            padding: 9px 13px;
-            border: 1px solid var(--border);
-            border-radius: 7px;
-            background: var(--panel-raised);
-            color: var(--text);
-            font-size: 11px;
+            min-height: 40px;
+            padding: 8px 15px;
+            border: 1px solid var(--lavender);
+            border-radius: 8px;
+            background: var(--lavender);
+            color: #1b1129;
+            font-size: 12px;
+            font-weight: 750;
+            transition: background 150ms ease;
         }
 
         .terminal-input-row button:hover {
-            border-color: var(--green);
+            background: var(--lavender-bright);
+        }
+
+        button:disabled,
+        input:disabled {
+            cursor: wait;
+            opacity: 0.6;
         }
 
         .terminal-footer {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            gap: 8px;
-            margin-top: 13px;
+            gap: 9px;
+            margin-top: 15px;
+            color: #8f809f;
+            font-size: 11px;
+        }
+
+        .command-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 20px;
+        }
+
+        .command-chip {
+            padding: 6px 10px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: var(--panel);
+            color: var(--lavender);
+            font-family: ui-monospace, monospace;
+            font-size: 11px;
+        }
+
+        .command-chip:hover {
+            border-color: var(--lavender);
+            background: var(--panel-raised);
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 17px;
+            border-top: 1px solid var(--border);
             color: var(--muted);
             font-size: 11px;
         }
@@ -471,49 +387,48 @@
             padding: 2px 5px;
             border: 1px solid var(--border);
             border-radius: 4px;
+            color: var(--lavender);
             font: inherit;
         }
 
-        .footer {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            margin-top: 25px;
-            padding-top: 17px;
-            border-top: 1px solid var(--border);
-            color: var(--muted);
-            font-size: 11px;
-        }
-
-        @media (max-width: 760px) {
+        @media (max-width: 600px) {
             .app {
                 padding: 17px;
             }
 
-            .workspace {
-                grid-template-columns: minmax(0, 1fr);
-            }
-
-            .analysis-screen {
-                min-height: 230px;
-            }
-
-            .empty-state {
-                min-height: 190px;
-            }
-
             .intro {
-                padding-top: 28px;
-            }
-        }
-
-        @media (max-width: 430px) {
-            .brand h1 {
-                font-size: 14px;
+                padding-top: 29px;
             }
 
-            .brand p {
-                font-size: 11px;
+            .intro h2 {
+                letter-spacing: -1px;
+            }
+
+            .panel-header {
+                padding: 15px;
+            }
+
+            .terminal-body {
+                padding: 15px;
+            }
+
+            .terminal-output {
+                min-height: 280px;
+                max-height: 460px;
+                font-size: 12px;
+            }
+
+            .terminal-input-row {
+                gap: 8px;
+                padding-left: 11px;
+            }
+
+            .terminal-input-row button {
+                padding: 8px 10px;
+            }
+
+            .footer {
+                flex-direction: column;
             }
 
             .connection {
@@ -521,21 +436,12 @@
                 font-size: 10px;
             }
 
-            .brand-icon {
-                width: 38px;
-                height: 38px;
+            .brand h1 {
+                font-size: 15px;
             }
 
-            .panel-header, .analysis-content, .form-content {
-                padding: 15px;
-            }
-
-            .terminal-body {
-                padding: 14px;
-            }
-
-            .footer {
-                flex-direction: column;
+            .brand p {
+                font-size: 11px;
             }
         }
 
@@ -556,130 +462,56 @@
             <div class="brand-icon" aria-hidden="true">⌁</div>
             <div>
                 <h1>AI Ticket CLI</h1>
-                <p>Technical support workspace</p>
+                <p>Technical support terminal</p>
             </div>
         </div>
 
         <div class="connection">
             <span class="dot" aria-hidden="true"></span>
-            <span id="connection-label">Workspace ready</span>
+            <span id="connection-label">Terminal ready</span>
         </div>
     </header>
 
     <section class="intro">
-        <div class="eyebrow">Support intelligence / 01</div>
-        <h2>Resolve the issue.<br>Understand the cause.</h2>
+        <div class="eyebrow">Support intelligence / 02</div>
+        <h2>Diagnose. Resolve.<br>Move forward.</h2>
         <p>
-            Create a support ticket, run an AI-assisted analysis, and
-            explore your tickets through the command terminal.
+            Manage support tickets and request AI-assisted troubleshooting
+            directly from your command terminal.
         </p>
     </section>
 
-    <section class="workspace" aria-label="Ticket workspace">
-
-        <section class="panel">
-            <header class="panel-header">
-                <div>
-                    <h2 class="panel-title">Analysis workspace</h2>
-                    <p class="panel-subtitle">AI-generated troubleshooting guidance</p>
-                </div>
-                <span class="tag" id="analysis-status">Standby</span>
-            </header>
-
-            <div class="analysis-content">
-                <div class="analysis-screen" id="analysis-screen" aria-live="polite">
-                    <div class="empty-state">
-                        <div class="empty-icon" aria-hidden="true">✳</div>
-                        <h3>Ready for your next ticket</h3>
-                        <p>
-                            Describe a technical issue to receive possible
-                            causes and practical troubleshooting steps.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="analysis-meta">
-                    <span class="meta-pill">Ticket <strong id="ticket-reference">—</strong></span>
-                    <span class="meta-pill">Provider <strong id="provider-reference">—</strong></span>
-                </div>
-            </div>
-        </section>
-
-        <section class="panel">
-            <header class="panel-header">
-                <div>
-                    <h2 class="panel-title">New support ticket</h2>
-                    <p class="panel-subtitle">Describe the problem to begin</p>
-                </div>
-                <span class="tag">Create</span>
-            </header>
-
-            <form id="ticket-form" class="form-content">
-                <div class="field">
-                    <label for="ticket-title">Ticket title</label>
-                    <input
-                        id="ticket-title"
-                        name="title"
-                        type="text"
-                        maxlength="150"
-                        placeholder="e.g. Wi-Fi connection issue"
-                        required
-                    >
-                </div>
-
-                <div class="field">
-                    <label for="ticket-description">Problem description</label>
-                    <textarea
-                        id="ticket-description"
-                        name="description"
-                        maxlength="4000"
-                        placeholder="What happened? What did you expect? When did it start?"
-                        required
-                    ></textarea>
-                    <span class="hint">Include any error messages or troubleshooting already attempted.</span>
-                </div>
-
-                <div class="field">
-                    <label for="provider">AI provider</label>
-                    <select id="provider" name="provider">
-                        <option value="groq">Groq</option>
-                        <option value="gemini">Google Gemini</option>
-                        <option value="openrouter">OpenRouter</option>
-                    </select>
-                </div>
-
-                <div class="provider-note">
-                    <span aria-hidden="true">✦</span>
-                    <p>
-                        <strong>AI-assisted analysis</strong><br>
-                        Results are suggestions, not confirmed diagnoses.
-                        Verify recommendations before making changes.
-                    </p>
-                </div>
-
-                <button class="primary-button" id="submit-button" type="submit">
-                    <span aria-hidden="true">↗</span>
-                    <span id="submit-label">Create ticket &amp; analyze</span>
-                </button>
-            </form>
-        </section>
-
-    </section>
-
-    <section class="panel terminal-panel">
+    <section class="terminal-panel" aria-label="Command terminal">
         <header class="panel-header">
             <div>
                 <h2 class="panel-title">Command terminal</h2>
-                <p class="panel-subtitle">Interact with the ticket system</p>
+                <p class="panel-subtitle">Your support operations, in one place</p>
             </div>
-            <span class="tag">CLI mode</span>
+            <span class="tag">Interactive CLI</span>
         </header>
 
         <div class="terminal-body">
-            <div class="terminal-output" id="terminal-output" aria-live="polite">
+            <div class="terminal-toolbar" aria-hidden="true">
+                <span class="window-dot"></span>
+                <span class="window-dot"></span>
+                <span class="window-dot"></span>
+                <span class="toolbar-label">ai-ticket-cli ~ terminal</span>
+            </div>
+
+            <div
+                class="terminal-output"
+                id="terminal-output"
+                role="log"
+                aria-live="polite"
+                aria-relevant="additions text"
+            >
                 <div class="terminal-line">
                     <span class="prefix">›</span>
-                    <span class="line-text">AI Ticket CLI initialized. Type help to see available commands.</span>
+                    <span class="line-text">AI Ticket CLI initialized.</span>
+                </div>
+                <div class="terminal-line muted">
+                    <span class="prefix">›</span>
+                    <span class="line-text">Type help to see available commands.</span>
                 </div>
             </div>
 
@@ -689,10 +521,12 @@
                     <input
                         id="terminal-command"
                         type="text"
-                        maxlength="500"
-                        placeholder="help, list, create TITLE | DESCRIPTION..."
+                        maxlength="4500"
+                        placeholder="Type a command..."
                         autocomplete="off"
-                        aria-label="Terminal command"
+                        autocapitalize="off"
+                        spellcheck="false"
+                        aria-label="Terminal command or response"
                         required
                     >
                     <button type="submit" id="terminal-run">Run ↵</button>
@@ -700,38 +534,48 @@
             </form>
 
             <div class="terminal-footer">
-                <span>Available: <kbd>help</kbd> <kbd>list</kbd> <kbd>create</kbd> <kbd>analyze</kbd></span>
-                <span>Commands are restricted to ticket operations.</span>
+                <span>Enter to submit · <kbd>help</kbd> for commands</span>
+                <span id="terminal-status">Ready for input</span>
             </div>
         </div>
     </section>
 
+    <div class="command-list" aria-label="Quick commands">
+        <button class="command-chip" type="button" data-command="help">help</button>
+        <button class="command-chip" type="button" data-command="list">list</button>
+        <button class="command-chip" type="button" data-command="create">create</button>
+        <button class="command-chip" type="button" data-command="analyze">analyze</button>
+        <button class="command-chip" type="button" data-command="clear">clear</button>
+    </div>
+
     <footer class="footer">
-        <span>AI Ticket CLI · Support workspace</span>
-        <span>AI output may be inaccurate. Review before acting.</span>
+        <span>AI Ticket CLI · Version 2</span>
+        <span>AI output may be inaccurate. Verify recommendations before acting.</span>
     </footer>
 
 </div>
 
 <script>
-    const ticketForm = document.getElementById("ticket-form");
     const terminalForm = document.getElementById("terminal-form");
     const terminalInput = document.getElementById("terminal-command");
     const terminalOutput = document.getElementById("terminal-output");
-    const analysisScreen = document.getElementById("analysis-screen");
-    const analysisStatus = document.getElementById("analysis-status");
-    const connectionLabel = document.getElementById("connection-label");
-    const submitButton = document.getElementById("submit-button");
-    const submitLabel = document.getElementById("submit-label");
     const terminalRun = document.getElementById("terminal-run");
+    const terminalStatus = document.getElementById("terminal-status");
+    const connectionLabel = document.getElementById("connection-label");
 
-    function addTerminalLine(text, type = "") {
+    let busy = false;
+    let flow = null;
+
+    function addLine(text, type = "") {
         const line = document.createElement("div");
         line.className = `terminal-line ${type}`;
 
         const prefix = document.createElement("span");
         prefix.className = "prefix";
-        prefix.textContent = type === "error" ? "!" : type === "success" ? "✓" : "›";
+        prefix.textContent =
+            type === "error" ? "!" :
+            type === "success" ? "✓" :
+            type === "command" ? "$" : "›";
 
         const content = document.createElement("span");
         content.className = "line-text";
@@ -742,6 +586,14 @@
         terminalOutput.scrollTop = terminalOutput.scrollHeight;
     }
 
+    function setBusy(value, message = "Processing...") {
+        busy = value;
+        terminalRun.disabled = value;
+        terminalInput.disabled = value;
+        terminalStatus.textContent = value ? message : "Ready for input";
+        connectionLabel.textContent = value ? "Processing..." : "Terminal ready";
+    }
+
     async function sendCommand(command) {
         const response = await fetch("/command", {
             method: "POST",
@@ -749,166 +601,209 @@
             body: JSON.stringify({ command })
         });
 
-        const data = await response.json();
+        let data;
+
+        try {
+            data = await response.json();
+        } catch {
+            throw new Error("The server returned an unreadable response.");
+        }
 
         if (!response.ok) {
-            throw new Error(data.detail || "The server rejected the command.");
+            throw new Error(
+                data.detail || "The server rejected the command."
+            );
         }
 
         return data;
     }
 
-    function setBusy(busy, message = "Working...") {
-        submitButton.disabled = busy;
-        terminalRun.disabled = busy;
-        terminalInput.disabled = busy;
-        document.getElementById("ticket-title").disabled = busy;
-        document.getElementById("ticket-description").disabled = busy;
-        document.getElementById("provider").disabled = busy;
-
-        submitLabel.textContent = busy ? message : "Create ticket & analyze";
-        connectionLabel.textContent = busy ? "Processing request..." : "Workspace ready";
+    function isErrorMessage(text) {
+        return /unknown command|could not|not found|invalid|cannot|can't|failed|error|cannot read/i.test(text);
     }
 
-    function showAnalysis(text, kind = "") {
-        analysisScreen.replaceChildren();
-
-        const result = document.createElement("div");
-        result.className = "analysis-text";
-        result.textContent = text;
-        analysisScreen.appendChild(result);
-
-        if (kind === "error") {
-            analysisStatus.textContent = "Needs attention";
-        } else {
-            analysisStatus.textContent = "Complete";
-        }
-    }
-
-    function showLoading(message) {
-        analysisScreen.replaceChildren();
-
-        const state = document.createElement("div");
-        state.className = "empty-state";
-
-        const icon = document.createElement("div");
-        icon.className = "empty-icon";
-        icon.textContent = "✳";
-
-        const title = document.createElement("h3");
-        title.textContent = message;
-
-        const detail = document.createElement("p");
-        detail.textContent = "This may take a little while while the provider prepares a response.";
-
-        state.append(icon, title, detail);
-        analysisScreen.appendChild(state);
-        analysisStatus.textContent = "Running";
-    }
-
-    async function createAndAnalyze(title, description, provider) {
-        setBusy(true, "Creating ticket...");
-        showLoading("Creating your ticket");
-
-        try {
-            const createResult = await sendCommand(
-                `create ${title} | ${description}`
-            );
-
-            addTerminalLine(createResult.output || "Create command completed.");
-
-            const match = (createResult.output || "").match(/Ticket\s+(T\d+)\s+created successfully/i);
-
-            if (!match) {
-                showAnalysis(
-                    createResult.output || "Ticket creation did not return a ticket ID.",
-                    "error"
-                );
-                analysisStatus.textContent = "Creation failed";
-                return;
-            }
-
-            const ticketId = match[1].toUpperCase();
-            document.getElementById("ticket-reference").textContent = ticketId;
-            document.getElementById("provider-reference").textContent = provider;
-
-            showLoading("Analyzing " + ticketId);
-            setBusy(true, "Analyzing ticket...");
-
-            const result = await sendCommand(`analyze ${ticketId} ${provider}`);
-
-            showAnalysis(result.output || "The server returned no analysis.");
-            addTerminalLine(`AI analysis completed for ${ticketId} using ${provider}.`, "success");
-
-            document.getElementById("ticket-title").value = "";
-            document.getElementById("ticket-description").value = "";
-        } catch (error) {
-            showAnalysis(
-                "Could not complete the request.\n\n" +
-                (error.message || "Check that the server is running and try again."),
-                "error"
-            );
-            analysisStatus.textContent = "Request failed";
-            addTerminalLine(error.message || "Request failed.", "error");
-        } finally {
-            setBusy(false);
-        }
-    }
-
-    ticketForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const title = document.getElementById("ticket-title").value.trim();
-        const description = document.getElementById("ticket-description").value.trim();
-        const provider = document.getElementById("provider").value;
-
-        if (!title || !description) {
-            showAnalysis("Enter both a ticket title and a problem description.", "error");
-            analysisStatus.textContent = "Missing details";
-            return;
-        }
-
-        await createAndAnalyze(title, description, provider);
-    });
-
-    terminalForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const command = terminalInput.value.trim();
-        if (!command) return;
-
-        addTerminalLine("$ " + command);
-        terminalInput.value = "";
-
-        if (command.toLowerCase() === "clear") {
-            terminalOutput.replaceChildren();
-            addTerminalLine("Terminal display cleared.");
-            return;
-        }
-
-        terminalRun.disabled = true;
-        terminalInput.disabled = true;
+    async function runBackendCommand(command) {
+        setBusy(true, "Executing command...");
 
         try {
             const result = await sendCommand(command);
+            const output = result.output || "Command completed with no output.";
 
             if (result.clear) {
                 terminalOutput.replaceChildren();
             } else {
-                const output = result.output || "Command completed with no output.";
-                const isError = /unknown command|could not|not found|invalid|missing|failed|error/i.test(output);
-                addTerminalLine(output, isError ? "error" : "success");
+                addLine(
+                    output,
+                    isErrorMessage(output) ? "error" : "success"
+                );
             }
         } catch (error) {
-            addTerminalLine(
+            addLine(
                 error.message || "Could not connect to the backend.",
                 "error"
             );
         } finally {
-            terminalRun.disabled = false;
-            terminalInput.disabled = false;
+            setBusy(false);
             terminalInput.focus();
         }
+    }
+
+    function startFlow(name) {
+        flow = { name, step: 1 };
+
+        if (name === "create") {
+            addLine("Ticket creation started.", "success");
+            addLine("Enter the ticket title:");
+        } else if (name === "analyze") {
+            addLine("AI analysis started.", "success");
+            addLine("Enter the ticket ID (for example, T001):");
+        }
+
+        terminalInput.focus();
+    }
+
+    async function handleFlowAnswer(answer) {
+        if (!flow) return;
+
+        if (flow.name === "create") {
+            if (flow.step === 1) {
+                if (!answer.trim()) {
+                    addLine("The ticket title cannot be empty.", "error");
+                    addLine("Enter the ticket title:");
+                    return;
+                }
+
+                flow.title = answer.trim();
+                flow.step = 2;
+                addLine("Enter the ticket description:");
+                return;
+            }
+
+            if (flow.step === 2) {
+                if (!answer.trim()) {
+                    addLine("The description cannot be empty.", "error");
+                    addLine("Enter the ticket description:");
+                    return;
+                }
+
+                const title = flow.title;
+                const description = answer.trim();
+
+                flow = null;
+
+                await runBackendCommand(
+                    `create ${title} | ${description}`
+                );
+                return;
+            }
+        }
+
+        if (flow.name === "analyze") {
+            if (flow.step === 1) {
+                if (!/^T\d+$/i.test(answer.trim())) {
+                    addLine("Enter a ticket ID such as T001.", "error");
+                    addLine("Enter the ticket ID:");
+                    return;
+                }
+
+                flow.ticketId = answer.trim().toUpperCase();
+                flow.step = 2;
+                addLine("Choose an AI provider: gemini, groq, or openrouter.");
+                return;
+            }
+
+            if (flow.step === 2) {
+                const provider = answer.trim().toLowerCase();
+
+                if (!["gemini", "groq", "openrouter"].includes(provider)) {
+                    addLine(
+                        "Invalid provider. Choose gemini, groq, or openrouter.",
+                        "error"
+                    );
+                    addLine("Choose an AI provider:");
+                    return;
+                }
+
+                const command = `analyze ${flow.ticketId} ${provider}`;
+                addLine(`Requesting analysis for ${flow.ticketId} using ${provider}.`);
+
+                flow = null;
+
+                await runBackendCommand(command);
+            }
+        }
+    }
+
+    async function handleCommand(rawInput) {
+        const input = rawInput.trim();
+
+        if (!input) return;
+
+        addLine(input, "command");
+
+        if (flow) {
+            await handleFlowAnswer(input);
+            return;
+        }
+
+        const firstWord = input.split(/\s+/, 1)[0].toLowerCase();
+
+        if (firstWord === "clear" && input.toLowerCase() === "clear") {
+            terminalOutput.replaceChildren();
+            addLine("Terminal display cleared.", "success");
+            return;
+        }
+
+        if (firstWord === "create" && input.toLowerCase() === "create") {
+            startFlow("create");
+            return;
+        }
+
+        if (firstWord === "analyze" && input.toLowerCase() === "analyze") {
+            startFlow("analyze");
+            return;
+        }
+
+        if (firstWord === "create" || firstWord === "analyze") {
+            addLine(
+                `For guided ${firstWord}, type "${firstWord}" without extra arguments.`,
+                "error"
+            );
+            return;
+        }
+
+        await runBackendCommand(input);
+    }
+
+    terminalForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (busy) return;
+
+        const value = terminalInput.value;
+        if (!value.trim()) return;
+
+        terminalInput.value = "";
+        await handleCommand(value);
+    });
+
+    document.querySelectorAll("[data-command]").forEach((button) => {
+        button.addEventListener("click", () => {
+            if (busy) return;
+
+            const command = button.dataset.command;
+
+            if (command === "clear") {
+                flow = null;
+                terminalOutput.replaceChildren();
+                addLine("Terminal display cleared.", "success");
+                terminalInput.focus();
+                return;
+            }
+
+            terminalInput.value = command;
+            terminalInput.focus();
+        });
     });
 </script>
 </body>

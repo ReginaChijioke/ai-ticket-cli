@@ -33,22 +33,26 @@ def execute_command(request: CommandRequest):
 
     command = parts[0].lower()
 
+    # Help
     if command == "help" and len(parts) == 1:
         return {
             "output": (
                 "Available commands:\n"
-                "help              Show available commands\n"
-                "list              List saved tickets\n"
-                "create TITLE | DESCRIPTION\n"
-                "analyze TICKET_ID PROVIDER\n"
-                "                  PROVIDER: gemini, groq, openrouter\n"
-                "clear             Clear the terminal display"
+                "help       Show available commands\n"
+                "list       List saved tickets\n"
+                "create     Create a ticket through guided prompts\n"
+                "analyze    Analyze a ticket through guided prompts\n"
+                "clear      Clear the terminal display\n"
+                "\n"
+                "AI providers: gemini, groq, openrouter"
             )
         }
 
+    # Clear terminal
     if command == "clear" and len(parts) == 1:
         return {"output": "Terminal cleared.", "clear": True}
 
+    # List tickets
     if command == "list" and len(parts) == 1:
         try:
             saved = core.load_tickets()
@@ -62,10 +66,13 @@ def execute_command(request: CommandRequest):
             f"{t.get('id', '?')} | {t.get('title', 'Untitled')}"
             for t in saved
         ]
+
         return {"output": "\n".join(lines)}
 
+    # Create ticket
     if command == "create":
         raw = request.command[len(parts[0]):].strip()
+
         if "|" not in raw:
             return {
                 "output": (
@@ -74,7 +81,9 @@ def execute_command(request: CommandRequest):
                 )
             }
 
-        title, description = (piece.strip() for piece in raw.split("|", 1))
+        title, description = (
+            piece.strip() for piece in raw.split("|", 1)
+        )
 
         if not title or not description:
             return {"output": "Title and description cannot be empty."}
@@ -82,19 +91,24 @@ def execute_command(request: CommandRequest):
         try:
             saved = core.load_tickets()
             ticket_id = core.generate_ticket_id(saved)
+
             saved.append({
                 "id": ticket_id,
                 "title": title,
                 "description": description
             })
+
             core.save_tickets(saved)
+
         except (OSError, ValueError):
             return {"output": "Could not save the ticket."}
 
         return {"output": f"Ticket {ticket_id} created successfully."}
 
+    # Analyze ticket
     if command == "analyze" and len(parts) == 3:
         ticket_id = parts[1].upper()
+
         provider_choice = {
             "gemini": "1",
             "groq": "2",
@@ -132,6 +146,7 @@ def execute_command(request: CommandRequest):
 
         return {"output": result.get("error") or "Analysis failed."}
 
+    # Unknown command
     return {
         "output": (
             f"Unknown command: {command}\n"
